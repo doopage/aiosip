@@ -68,6 +68,9 @@ class Contact(MutableMapping):
             r += ';%s' % str(params)
         return r
 
+    def clone(self):
+        return Contact.from_header(str(self.get('uri')))
+
     @property
     def scheme(self):
         return self._contact['uri']['scheme']
