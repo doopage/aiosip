@@ -1,8 +1,7 @@
 import asyncio
 import logging
 
-from aiosip.auth import Auth
-
+from .auth import Auth
 from .exceptions import AuthentificationFailed
 
 LOG = logging.getLogger(__name__)
