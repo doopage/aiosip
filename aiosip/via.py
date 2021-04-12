@@ -1,10 +1,8 @@
-import re
 import logging
-
+import re
 from collections.abc import MutableMapping
 
 from .param import Param
-
 
 VIA_PATTERNS = [
     re.compile('SIP/2.0/(?P<protocol>[a-zA-Z]+)'
@@ -12,7 +10,6 @@ VIA_PATTERNS = [
                '(?P<sentby>[^;]+)'
                '(?:;(?P<params>.*))'),
 ]
-
 
 LOG = logging.getLogger(__name__)
 

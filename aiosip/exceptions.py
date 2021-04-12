@@ -1,4 +1,3 @@
-
 class AiosipException(Exception):
     pass
 

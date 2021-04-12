@@ -5,18 +5,15 @@ import sys
 
 import pytest
 
-
 try:
     import uvloop
 except ImportError:  # pragma: no cover
     uvloop = None
 
-
 try:
     import tokio
 except ImportError:  # pragma: no cover
     tokio = None
-
 
 LOOP_FACTORIES = []
 LOOP_FACTORY_IDS = []

@@ -1,6 +1,8 @@
-import aiosip
-import pytest
 import asyncio
+
+import pytest
+
+import aiosip
 
 
 async def test_notify(test_server, protocol, loop, from_details, to_details, close_order):

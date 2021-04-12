@@ -69,7 +69,6 @@ async def test_response_501(test_server, protocol, loop, from_details, to_detail
 
 
 async def test_exception_in_handler(test_server, protocol, loop, from_details, to_details, close_order):
-
     class Dialplan(aiosip.BaseDialplan):
 
         async def resolve(self, *args, **kwargs):

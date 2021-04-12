@@ -1,16 +1,16 @@
-import uuid
 import asyncio
-import logging
 import ipaddress
-import websockets
+import logging
+import uuid
 
+import websockets
 from multidict import CIMultiDict
 
-from . import utils
 from . import exceptions
+from . import utils
 from .contact import Contact
-from .protocol import UDP, TCP, WS
 from .dialog import Dialog, InviteDialog
+from .protocol import UDP, TCP, WS
 
 LOG = logging.getLogger(__name__)
 
@@ -298,6 +298,7 @@ class UDPServer:
     """
     Shim to present a unified server interface.
     """
+
     def __init__(self, transport):
         self.transport = transport
 

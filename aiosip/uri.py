@@ -1,11 +1,8 @@
-import re
 import logging
-
-
+import re
 from collections.abc import MutableMapping
 
 from .param import Param
-
 
 LOG = logging.getLogger(__name__)
 

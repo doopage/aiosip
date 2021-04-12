@@ -1,13 +1,11 @@
+import logging
 import re
 import string
-import logging
-
 from collections.abc import MutableMapping
 
 from .param import Param
 from .uri import Uri
 from .utils import gen_str
-
 
 CONTACT_PATTERNS = [
     # unquoted name
@@ -29,7 +27,6 @@ CONTACT_PATTERNS = [
                '[ \t]*'
                '(?:;(?P<params>[^\?]*))?'),
 ]
-
 
 LOG = logging.getLogger(__name__)
 

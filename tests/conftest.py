@@ -1,7 +1,9 @@
-import aiosip
-import pytest
 import asyncio
 import itertools
+
+import pytest
+
+import aiosip
 
 pytest_plugins = ['aiosip.pytest_plugin']
 

@@ -1,12 +1,13 @@
 """
 Same structure as aiohttp.web.Application
 """
-import sys
 import asyncio
 import logging
-import aiodns
-from contextlib import suppress
+import sys
 import traceback
+from contextlib import suppress
+
+import aiodns
 
 __all__ = ['Application']
 
@@ -20,7 +21,6 @@ from .peers import UDPConnector, TCPConnector, WSConnector
 from .message import Response
 from .contact import Contact
 from .via import Via
-
 
 LOG = logging.getLogger(__name__)
 
@@ -224,7 +224,7 @@ class Application(MutableMapping):
             try:
                 res = cb(self, *args, **kwargs)
                 if (asyncio.iscoroutine(res) or
-                        isinstance(res, asyncio.Future)):
+                    isinstance(res, asyncio.Future)):
                     yield from res
             except Exception as exc:
                 self.loop.call_exception_handler({

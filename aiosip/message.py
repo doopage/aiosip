@@ -2,12 +2,12 @@ import logging
 import re
 import uuid
 
-from pyquery import PyQuery
 from multidict import CIMultiDict
+from pyquery import PyQuery
 
 from . import utils
-from .contact import Contact
 from .auth import Auth
+from .contact import Contact
 
 FIRST_LINE_PATTERN = {
     'request': {
@@ -17,7 +17,6 @@ FIRST_LINE_PATTERN = {
         'regex': re.compile(r'SIP/2.0 (?P<status_code>[0-9]{3}) (?P<status_message>.+)'),
         'str': 'SIP/2.0 {status_code} {status_message}'},
 }
-
 
 LOG = logging.getLogger(__name__)
 
@@ -54,9 +53,9 @@ class Message:
 
         if 'Via' not in self.headers:
             self.headers['Via'] = 'SIP/2.0/%(protocol)s ' + \
-                utils.format_host_and_port(self.contact_details['uri']['host'],
-                                           self.contact_details['uri']['port']) + \
-                ';branch=%s' % utils.gen_branch(10)
+                                  utils.format_host_and_port(self.contact_details['uri']['host'],
+                                                             self.contact_details['uri']['port']) + \
+                                  ';branch=%s' % utils.gen_branch(10)
 
     @property
     def auth(self):

@@ -6,16 +6,15 @@ try:
 except ImportError:
     from distutils.core import setup
 
-
 readme = open('README.rst').read()
 history = open('HISTORY.rst').read().replace('.. :changelog:', '')
 
 requirements = [
-   'multidict>=2.0',
-   'pyquery',
-   'aiodns',
-   'websockets',
-   'async_timeout'
+    'multidict>=2.0',
+    'pyquery',
+    'aiodns',
+    'websockets',
+    'async_timeout'
 ]
 
 test_requirements = [
@@ -35,7 +34,7 @@ setup(
         'aiosip',
     ],
     package_dir={'aiosip':
-                 'aiosip'},
+                     'aiosip'},
     include_package_data=True,
     install_requires=requirements,
     license="Apache 2",

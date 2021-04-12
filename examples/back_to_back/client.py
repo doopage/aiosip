@@ -5,7 +5,6 @@ import logging
 import random
 
 import aiosip
-
 from util import Registration
 
 sip_config = {

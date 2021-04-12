@@ -1,16 +1,15 @@
-import enum
 import asyncio
+import enum
 import logging
-
-from multidict import CIMultiDict
 from collections import defaultdict
+
 from async_timeout import timeout as Timeout
+from multidict import CIMultiDict
 
 from . import utils
 from .auth import AuthenticateAuth, AuthorizationAuth
 from .message import Request, Response
 from .transaction import UnreliableTransaction
-
 
 LOG = logging.getLogger(__name__)
 

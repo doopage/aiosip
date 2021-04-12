@@ -3,7 +3,6 @@ import logging
 
 from . import message
 
-
 LOG = logging.getLogger(__name__)
 
 

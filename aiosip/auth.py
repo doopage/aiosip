@@ -1,10 +1,9 @@
+import logging
 from collections.abc import MutableMapping
 from enum import Enum
 from hashlib import md5
-import logging
 
 from . import utils
-
 
 LOG = logging.getLogger(__name__)
 
@@ -156,13 +155,13 @@ class AuthenticateAuth(Auth):
 
     def validate_authorization(self, authorization_auth, password, username, uri, payload=''):
         response = self._calculate_response(
-                uri=uri,
-                payload=payload,
-                password=password,
-                username=username,
-                cnonce=authorization_auth.get('cnonce'),
-                nonce_count=authorization_auth.get('nc')
-            )
+            uri=uri,
+            payload=payload,
+            password=password,
+            username=username,
+            cnonce=authorization_auth.get('cnonce'),
+            nonce_count=authorization_auth.get('nc')
+        )
 
         return response == authorization_auth['response']
 

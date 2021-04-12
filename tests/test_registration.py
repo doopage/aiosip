@@ -1,6 +1,5 @@
 from aiosip import auth
 
-
 AUTH = {
     'auth_with_qop': 'Digest  realm="asterisk",'
                      'nonce="1535646722/5d9e709c8f2ccd74601946bfbd77b032",'

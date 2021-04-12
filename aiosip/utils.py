@@ -1,9 +1,8 @@
+import asyncio
+import ipaddress
+import logging
 import random
 import string
-import asyncio
-import logging
-import ipaddress
-
 
 LOG = logging.getLogger(__name__)
 
@@ -96,11 +95,11 @@ def format_host_and_port(host, port):
     return uri
 
 
-def gen_str(length=10, letters=string.ascii_letters+string.digits):
+def gen_str(length=10, letters=string.ascii_letters + string.digits):
     return "".join([random.choice(letters) for n in range(length)])
 
 
-def gen_branch(length=10, letters=string.ascii_letters+string.digits):
+def gen_branch(length=10, letters=string.ascii_letters + string.digits):
     return "".join(("z9hG4bK", gen_str(length=length, letters=letters)))
 
 

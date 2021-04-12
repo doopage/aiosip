@@ -1,7 +1,7 @@
 import argparse
 import asyncio
-import logging
 import itertools
+import logging
 
 import aiosip
 
