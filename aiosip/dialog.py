@@ -135,11 +135,11 @@ class DialogBase:
 
     def validate_auth(self, message, password):
         if isinstance(message.auth, AuthorizationAuth) and self.auth.validate_authorization(
-            message.auth,
-            password=password,
-            username=message.auth['username'],
-            uri=message.auth['uri'],
-            payload=message.payload
+                message.auth,
+                password=password,
+                username=message.auth['username'],
+                uri=message.auth['uri'],
+                payload=message.payload
         ):
             return True
         elif message.method == 'CANCEL':
@@ -366,7 +366,17 @@ class InviteDialog(DialogBase):
                 self._waiter.set_result(msg)
 
         async def handle_calling_state(msg):
-            if 100 <= msg.status_code < 200:
+            if msg.status_code == 401:
+                self.original_msg.cseq += 1
+                self.original_msg.headers['Authorization'] = msg.auth.generate_authorization(
+                    username=msg.from_details['uri']['user'],
+                    password=self.password,
+                    payload=msg.payload,
+                    uri=msg.to_details['uri'].short_uri()
+                )
+                self.original_msg.to_details = self.original_msg.to_details.clone()
+                self.peer.send_message(self.original_msg)
+            elif 100 <= msg.status_code < 200:
                 self._state = CallState.Proceeding
 
             elif msg.status_code == 200:
