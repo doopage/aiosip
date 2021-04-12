@@ -375,6 +375,7 @@ class InviteDialog(DialogBase):
                     uri=msg.to_details['uri'].short_uri()
                 )
                 self.original_msg.to_details = self.original_msg.to_details.clone()
+                self.app._dialogs[self.dialog_id] = self
                 self.peer.send_message(self.original_msg)
             elif 100 <= msg.status_code < 200:
                 self._state = CallState.Proceeding
