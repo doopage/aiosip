@@ -56,7 +56,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'aiosip'
-copyright = u'2014, Ludovic Gasc (GMLudo)'
+copyright = u'2021, DooPage'
 
 # The version info for the project you're documenting, acts as replacement
 # for |version| and |release|, also used in various other places throughout
@@ -209,7 +209,7 @@ latex_elements = {
 latex_documents = [
     ('index', 'aiosip.tex',
      u'aiosip Documentation',
-     u'Ludovic Gasc (GMLudo)', 'manual'),
+     u'DooPage', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at
@@ -240,7 +240,7 @@ latex_documents = [
 man_pages = [
     ('index', 'aiosip',
      u'aiosip Documentation',
-     [u'Ludovic Gasc (GMLudo)'], 1)
+     [u'DooPage'], 1)
 ]
 
 # If true, show URL addresses after external links.
@@ -255,7 +255,7 @@ man_pages = [
 texinfo_documents = [
     ('index', 'aiosip',
      u'aiosip Documentation',
-     u'Ludovic Gasc (GMLudo)',
+     u'DooPage',
      'aiosip',
      'One line description of project.',
      'Miscellaneous'),

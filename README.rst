@@ -2,12 +2,12 @@
 aiosip `(DEPRECATED) <https://github.com/Eyepea/aiosip/issues/136#issuecomment-748930217>`_
 ===================
 
-.. image:: https://travis-ci.org/Eyepea/aiosip.svg?branch=master
-    :target:  https://travis-ci.org/Eyepea/aiosip
+.. image:: https://travis-ci.org/DooPage/aiosip.svg?branch=master
+    :target:  https://travis-ci.org/DooPage/aiosip
     :align: right
 
-.. image:: https://codecov.io/gh/Eyepea/aiosip/branch/master/graph/badge.svg
-    :target: https://codecov.io/gh/Eyepea/aiosip
+.. image:: https://codecov.io/gh/DooPage/aiosip/branch/master/graph/badge.svg
+    :target: https://codecov.io/gh/DooPage/aiosip
 
 .. image:: https://badge.fury.io/py/aiosip.svg
     :target: http://badge.fury.io/py/aiosip

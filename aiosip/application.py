@@ -223,7 +223,7 @@ class Application(MutableMapping):
             try:
                 res = cb(self, *args, **kwargs)
                 if (asyncio.iscoroutine(res) or
-                    isinstance(res, asyncio.Future)):
+                        isinstance(res, asyncio.Future)):
                     yield from res
             except Exception as exc:
                 self.loop.call_exception_handler({

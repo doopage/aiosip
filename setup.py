@@ -27,9 +27,9 @@ setup(
     version='0.2.0',
     description='SIP support for AsyncIO',
     long_description=readme + '\n\n' + history,
-    author='Ludovic Gasc (GMLudo)',
-    author_email='gmludo@gmail.com',
-    url='https://github.com/Eyepea/aiosip',
+    author='DooPage',
+    author_email='info@doopage.com',
+    url='https://github.com/DooPage/aiosip',
     packages=[
         'aiosip',
     ],

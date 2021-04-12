@@ -5,7 +5,8 @@ Credits
 Development Lead
 ----------------
 
-* Ludovic Gasc (GMLudo) <git@gmludo.eu>
+* Ludovic Gasc (GMLudo) <git@gmludo.eu> (Original Developer)
+* DooPage <info@doopage.com>
 
 Contributors
 ------------
