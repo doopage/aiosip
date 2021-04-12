@@ -13,7 +13,6 @@ __all__ = ['Application']
 
 from collections.abc import MutableMapping
 
-from . import __version__
 from .dialog import Dialog
 from .dialplan import BaseDialplan
 from .protocol import UDP, TCP, WS
@@ -25,7 +24,7 @@ from .via import Via
 LOG = logging.getLogger(__name__)
 
 DEFAULTS = {
-    'user_agent': 'Python/{0[0]}.{0[1]}.{0[2]} aiosip/{1}'.format(sys.version_info, __version__),
+    'user_agent': 'Python/{0[0]}.{0[1]}.{0[2]}'.format(sys.version_info),
     'override_contact_host': None,
     'dialog_closing_delay': 30
 }
