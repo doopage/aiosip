@@ -474,6 +474,14 @@ class InviteDialog(DialogBase):
                 msg = self._prepare_request('CANCEL')
 
             if msg:
+                authorization = self.original_msg.headers.get('Authorization')
+                if authorization and not msg.headers.get('Authorization'):
+                    if hasattr(authorization, 'next'):
+                        authorization.next()
+                    msg.headers['Authorization'] = authorization
+                    if 'Contact' in msg.headers:
+                        del msg.headers['Contact']
+                    msg.to_details = msg.to_details.clone()
                 transaction = UnreliableTransaction(self, original_msg=msg, loop=self.app.loop)
                 self.transactions[msg.method][msg.cseq] = transaction
 

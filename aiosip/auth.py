@@ -147,10 +147,7 @@ class AuthenticateAuth(Auth):
 
     def generate_authorization(self, username, password, uri, payload=''):
         auth = AuthorizationAuth(mode=self.mode, uri=uri, username=username, response=None, **self)
-        auth['response'] = auth._calculate_response(
-            password=password,
-            payload=payload
-        )
+        auth.next(password=password, payload=payload)
         return auth
 
     def validate_authorization(self, authorization_auth, password, username, uri, payload=''):
@@ -179,6 +176,11 @@ class AuthorizationAuth(Auth):
             raise ValueError('No authentication response')
 
         super().__init__(*args, **kwargs)
+        self._kwargs = {}
+
+    def next(self, **kwargs):
+        self._kwargs.update(kwargs)
+        self['response'] = self._calculate_response(**self._kwargs)
 
     def _calculate_response(self, password, username=None, uri=None, payload='', cnonce=None, nonce_count=None):
         if cnonce:
