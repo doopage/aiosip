@@ -14,7 +14,7 @@ class BaseTransaction:
         self.loop = loop or asyncio.get_event_loop()
         self.attempts = attempts
         self.retransmission = None
-        self.authentification = None
+        self.authentication = None
         self._running = True
         LOG.debug('Creating: %s', self)
 
@@ -26,9 +26,9 @@ class BaseTransaction:
             self.retransmission.cancel()
             self.retransmission = None
 
-        if self.authentification and msg.status_code not in (401, 407):
-            self.authentification.cancel()
-            self.authentification = None
+        if self.authentication and msg.status_code not in (401, 407):
+            self.authentication.cancel()
+            self.authentication = None
 
     def _error(self, error):
         raise NotImplementedError
@@ -64,9 +64,9 @@ class BaseTransaction:
         if self.attempts < 1:
             self._error(AuthentificationFailed('Too many unauthorized attempts!'))
             return
-        elif self.authentification:
-            self.authentification.cancel()
-            self.authentification = None
+        elif self.authentication:
+            self.authentication.cancel()
+            self.authentication = None
 
         if msg.method.upper() == 'REGISTER':
             username = msg.to_details['uri']['user']
@@ -82,7 +82,7 @@ class BaseTransaction:
         )
 
         self.dialog.transactions[self.original_msg.method][self.original_msg.cseq] = self
-        self.authentification = asyncio.ensure_future(self._timer())
+        self.authentication = asyncio.ensure_future(self._timer())
 
     def _handle_proxy_authenticate(self, msg):
         self._handle_proxy_authenticate(msg)
@@ -134,16 +134,16 @@ class FutureTransaction(BaseTransaction):
             self._result(msg)
 
     def _error(self, error):
-        if self.authentification:
-            self.authentification.cancel()
-            self.authentification = None
+        if self.authentication:
+            self.authentication.cancel()
+            self.authentication = None
         self._future.set_exception(error)
         self.dialog.end_transaction(self)
 
     def _result(self, msg):
-        if self.authentification:
-            self.authentification.cancel()
-            self.authentification = None
+        if self.authentication:
+            self.authentication.cancel()
+            self.authentication = None
         self._future.set_result(msg)
         self.dialog.end_transaction(self)
 
