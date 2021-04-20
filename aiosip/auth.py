@@ -27,6 +27,8 @@ class Auth(MutableMapping):
     def __init__(self, mode='Digest', **kwargs):
         self._auth = kwargs
         self.mode = mode
+        self.skip_quote = ['algorithm', 'qop']
+        self.ignore_kwargs = []
 
         if self.mode != 'Digest':
             raise ValueError('Authentication method not supported')
@@ -39,11 +41,13 @@ class Auth(MutableMapping):
             r = 'Digest '
             args = []
             for k, v in kwargs.items():
-                if k == 'algorithm':
+                if k in self.ignore_kwargs:
+                    continue
+                if k in self.skip_quote:
                     args.append('%s=%s' % (k, v))
                 else:
                     args.append('%s="%s"' % (k, v))
-            r += ', '.join(args)
+            r += ','.join(args)
         else:
             raise ValueError('Authentication method not supported')
         return r
@@ -176,6 +180,8 @@ class AuthorizationAuth(Auth):
             raise ValueError('No authentication response')
 
         super().__init__(*args, **kwargs)
+        self.skip_quote.append('nc')
+        self.ignore_kwargs.append('method')
         self._kwargs = {}
 
     def next(self, **kwargs):
@@ -183,16 +189,15 @@ class AuthorizationAuth(Auth):
         self['response'] = self._calculate_response(**self._kwargs)
 
     def _calculate_response(self, password, username=None, uri=None, payload='', cnonce=None, nonce_count=None):
+        self.nc = nonce_count or self.nc + 1
+        self['nc'] = '%08d' % self.nc
+
         if cnonce:
-            self.nc = nonce_count or self.nc + 1
-            self['nc'] = str(self.nc)
             self['cnonce'] = cnonce
         elif not cnonce and (
             self.get('algorithm') == 'md5-sess' or
             self.get('qop', '').lower() in ('auth', 'auth-int')
         ):
-            self.nc = nonce_count or self.nc + 1
-            self['nc'] = str(self.nc)
             self['cnonce'] = utils.gen_str(10)
 
         return super()._calculate_response(
