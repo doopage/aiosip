@@ -407,6 +407,9 @@ class InviteDialog(DialogBase):
 
         await self._queue.put(msg)
 
+        if msg.method == 'CANCEL':
+            return self._receive_response(msg)
+
         # TODO: sip timers and flip to Terminated after timeout
         if self._state == CallState.Calling:
             await handle_calling_state(msg)
@@ -418,6 +421,9 @@ class InviteDialog(DialogBase):
             await handle_completed_state(msg)
 
         elif self._state == CallState.Terminated:
+            if msg.status_code == 487:  # Request Terminated
+                # Duplicate response
+                return
             if isinstance(msg, Response) or msg.method == 'ACK':
                 return self._receive_response(msg)
             else:
