@@ -38,8 +38,11 @@ class Application(MutableMapping):
                  defaults=None,
                  debug=False,
                  dialplan=BaseDialplan(),
-                 dns_resolver=aiodns.DNSResolver()
+                 dns_resolver=None
                  ):
+
+        if not dns_resolver:
+            dns_resolver = aiodns.DNSResolver()
 
         if loop is None:
             loop = asyncio.get_event_loop()
@@ -223,7 +226,7 @@ class Application(MutableMapping):
             try:
                 res = cb(self, *args, **kwargs)
                 if (asyncio.iscoroutine(res) or
-                        isinstance(res, asyncio.Future)):
+                    isinstance(res, asyncio.Future)):
                     yield from res
             except Exception as exc:
                 self.loop.call_exception_handler({
