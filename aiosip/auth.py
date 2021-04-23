@@ -184,7 +184,9 @@ class AuthorizationAuth(Auth):
         self.ignore_kwargs.append('method')
         self._kwargs = {}
 
-    def next(self, **kwargs):
+    def next(self, method=None, **kwargs):
+        if method:
+            self['method'] = method
         self._kwargs.update(kwargs)
         self['response'] = self._calculate_response(**self._kwargs)
 

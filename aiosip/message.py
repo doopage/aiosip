@@ -164,7 +164,8 @@ class Message:
             self.headers['To'] = str(self.to_details)
 
         if hasattr(self, '_contact_details'):
-            self.headers['Contact'] = str(self.contact_details)
+            if self.contact_details:
+                self.headers['Contact'] = str(self.contact_details)
 
         if hasattr(self, '_cseq'):
             self.headers['CSeq'] = '%s %s' % (self.cseq, self.method)
