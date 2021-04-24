@@ -2,7 +2,6 @@
 
 __author__ = 'DooPage'
 __email__ = 'info@doopage.com'
-__version__ = '1.0.0'
 
 from .application import *
 from .dialog import *
