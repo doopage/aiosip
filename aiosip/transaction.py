@@ -43,10 +43,12 @@ class BaseTransaction:
             self.retransmission.cancel()
             self.retransmission = None
 
-    async def _timer(self, timeout=0.5):
+    async def _timer(self, timeout=0.5, skip_wait=False):
         max_timeout = timeout * 64
         while timeout <= max_timeout:
             self.dialog.peer.send_message(self.original_msg)
+            if skip_wait:
+                return
             await asyncio.sleep(timeout)
             timeout *= 2
 
@@ -111,8 +113,13 @@ class FutureTransaction(BaseTransaction):
         super().__init__(*args, **kwargs)
         self._future = self.loop.create_future()
 
-    async def start(self):
-        self.retransmission = asyncio.ensure_future(self._timer())
+    async def _timer(self, timeout=0.5, skip_wait=False):
+        await super()._timer(timeout, skip_wait)
+        if skip_wait:
+            self._future.set_result(None)
+
+    async def start(self, **kwargs):
+        self.retransmission = asyncio.ensure_future(self._timer(**kwargs))
         return await self._future
 
     def _incoming(self, msg):

@@ -493,7 +493,7 @@ class InviteDialog(DialogBase):
 
                 try:
                     async with Timeout(timeout):
-                        await transaction.start()
+                        await transaction.start(skip_wait=self._state == CallState.Calling)
                 finally:
                     self._close()
 
