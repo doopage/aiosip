@@ -3,6 +3,10 @@
 History
 -------
 
+1.0.2 (2021-04-26)
+------------------
+* Skip wait response CANCEL if call not init
+
 1.0.1 (2021-04-24)
 ------------------
 * Fixed no event loop in thread
