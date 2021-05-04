@@ -469,32 +469,36 @@ class InviteDialog(DialogBase):
         for item in to_delete:
             del self.transactions[item[0]][item[1]]
 
-    async def close(self, timeout=None):
-        if not self._closed:
-            self._closed = True
+    async def close(self, method=None, timeout=None):
+        if method is None:
+            if not self._closed:
+                if self._state == CallState.Terminated:
+                    return await self.bye(timeout=timeout)
+                elif self._state != CallState.Completed:
+                    return await self.cancel(timeout=timeout)
+            return
 
-            msg = None
-            if self._state == CallState.Terminated:
-                msg = self._prepare_request('BYE')
-            elif self._state != CallState.Completed:
-                msg = self._prepare_request('CANCEL')
+        self._closed = True
+        msg = self._prepare_request(method)
+        authorization = self.original_msg.headers.get('Authorization')
+        if authorization and not msg.headers.get('Authorization'):
+            if hasattr(authorization, 'next'):
+                authorization.next(method=msg.method)
+            msg.headers['Authorization'] = authorization
+            msg.to_details = msg.to_details.clone()
+            msg.contact_details = None
+            msg.headers['Via'] = self.original_msg.headers['Via']
+        transaction = UnreliableTransaction(self, original_msg=msg, loop=self.app.loop)
+        self.transactions[msg.method][msg.cseq] = transaction
 
-            if msg:
-                authorization = self.original_msg.headers.get('Authorization')
-                if authorization and not msg.headers.get('Authorization'):
-                    if hasattr(authorization, 'next'):
-                        authorization.next(method=msg.method)
-                    msg.headers['Authorization'] = authorization
-                    msg.to_details = msg.to_details.clone()
-                    msg.contact_details = None
-                    msg.headers['Via'] = self.original_msg.headers['Via']
-                transaction = UnreliableTransaction(self, original_msg=msg, loop=self.app.loop)
-                self.transactions[msg.method][msg.cseq] = transaction
+        try:
+            async with Timeout(timeout):
+                await transaction.start(skip_wait=self._state == CallState.Calling)
+        finally:
+            self._close()
 
-                try:
-                    async with Timeout(timeout):
-                        await transaction.start(skip_wait=self._state == CallState.Calling)
-                finally:
-                    self._close()
+    async def bye(self, **kwargs):
+        return await self.close(method='BYE', **kwargs)
 
-        self._close()
+    async def cancel(self, **kwargs):
+        return await self.close(method='CANCEL', **kwargs)
