@@ -3,6 +3,11 @@
 History
 -------
 
+1.0.3 (2021-05-04)
+------------------
+* Allow use Prefix for Call-ID
+* Support Send BYE after call invite success
+
 1.0.2 (2021-04-26)
 ------------------
 * Skip wait response CANCEL if call not init
