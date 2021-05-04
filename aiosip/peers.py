@@ -39,7 +39,8 @@ class Peer:
         from_details.add_tag()
 
         if not call_id:
-            call_id = str(uuid.uuid4())
+            call_id = '%s'
+        call_id %= str(uuid.uuid4())
 
         if not contact_details:
             host, port = self.local_addr
